@@ -2,7 +2,7 @@ const { getPlayers, addPlayer } = require('../db/consultas')
 
 const obtenerJugadores = async (req, res) => {
     const { teamID } = req.params
-    const jugadores = await getPlayers(teamID)
+    const jugadores = await getPlayers(parseInt(teamID))
     res.json(jugadores)
 }
 

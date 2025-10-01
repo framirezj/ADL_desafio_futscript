@@ -1,29 +1,39 @@
-const { Pool } = require('pg')
+const { Pool } = require("pg");
 
 const pool = new Pool({
-    host: 'localhost',
-    user: 'postgres',
-    password: 'postgres',
-    database: 'futscript',
-    allowExitOnIdle: true
-})
+  host: "localhost",
+  user: "postgres",
+  password: "postgres",
+  database: "futscript",
+  allowExitOnIdle: true,
+});
 
 const getTeams = async () => {
-    const query = `SELECT * FROM equipos`
-    const {rows} = await pool.query(query)
-    return rows
-}
+  const query = `SELECT * FROM equipos`;
+  const { rows } = await pool.query(query);
+  return rows;
+};
 
 const getPlayers = async (teamID) => {
-    //...
-}
+  const query = `
+        SELECT 
+        j.name AS name,
+        p.name AS posicion 
+        FROM jugadores j
+        INNER JOIN equipos e ON j.id_equipo = e.id
+        INNER JOIN posiciones p ON j.position = p.id
+        WHERE j.id_equipo = $1`;
+  const { rows } = await pool.query(query, [teamID]);
+  console.log(rows)
+  return rows;
+};
 
 const addTeam = async (equipo) => {
-    //...
-}
+  //...
+};
 
 const addPlayer = async ({ jugador, teamID }) => {
-    //...
-}
+  //...
+};
 
-module.exports = { getTeams, addTeam, getPlayers, addPlayer }
+module.exports = { getTeams, addTeam, getPlayers, addPlayer };
