@@ -7,8 +7,8 @@ const obtenerEquipos = async (req, res) => {
 
 const agregarEquipo = async (req, res) => {
     const equipo = req.body
-    await addTeam(equipo)
-    res.send({ message: "Equipo agregado con éxito" })
+    const equipoBd = await addTeam(equipo)
+    res.send({ message: "Equipo agregado con éxito", equipo: equipoBd })
 }
 
 module.exports = { obtenerEquipos, agregarEquipo }

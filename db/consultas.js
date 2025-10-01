@@ -29,11 +29,23 @@ const getPlayers = async (teamID) => {
 };
 
 const addTeam = async (equipo) => {
-  //...
+  const query = `INSERT INTO equipos (name) VALUES ($1) RETURNING *`
+  const values = [equipo.name]
+
+  const {rows} = await pool.query(query, values)
+  return rows[0]
 };
 
 const addPlayer = async ({ jugador, teamID }) => {
-  //...
+
+    //jugadores id id_equipo,name,position
+
+    const query = `INSERT INTO jugadores (id_equipo,name,position) VALUES ($1,$2,$3) RETURNING *`
+    const values =[teamID, jugador.name, jugador.posicion]
+
+    const {rows } = await pool.query(query,values)
+    return rows[0]
+  
 };
 
 module.exports = { getTeams, addTeam, getPlayers, addPlayer };
